@@ -28,10 +28,31 @@ Ext.define('Ext.ux.TouchCalendarDayEvents', {
 		for(; i < l; i++){
 			rec = store.getAt(i);
 
-			var eventRecord     = rec.data.Record,
-				eventBar        = this.createEventBar(rec, eventRecord),
+			var eventRecord     = rec.data.Record;
 
-				eventWidth      = this.getEventBarWidth(rec, 50+10), // 50 = left margin, 10 = right margin TODO: make configurable
+			var doesWrap    = this.eventBarDoesWrap(rec),
+				hasWrapped  = this.eventBarHasWrapped(rec),
+				cssClasses  = [
+					this.getPlugin().getEventBarCls(),
+					'e-' + rec.get('EventID'),
+					(doesWrap ? ' wrap-end' : ''),
+					(hasWrapped ? ' wrap-start' : ''),
+					eventRecord.get(this.getPlugin().getCssClassField())
+				];
+
+
+			// create the event bar
+			var eventBar = Ext.DomHelper.append(this.getPlugin().getEventWrapperEl(), {
+				tag: 'div',
+				style: {
+					'background-color': eventRecord.get(this.getPlugin().colourField)
+				},
+				html: this.getPlugin().getEventBarTpl().apply(eventRecord.data),
+				eventID: rec.get('EventID'),
+				cls: cssClasses.join(' ')
+			}, true);
+
+			var	eventWidth      = this.getEventBarWidth(rec, 50+10), // 50 = left margin, 10 = right margin TODO: make configurable
 
 				verticalPos     = this.getVerticalDayPosition(rec),
 				horizontalPos   = this.getHorizontalDayPosition(rec, eventWidth),
