@@ -82,7 +82,7 @@ renderEventBars: function(store){
 	        //calculate where it should be in the day roughly      
     	    //FIXME: figure out how to get the month bar height and the size of the text for the day numbers
         	//20 is just a rough guess that seems to work decently.  
-        	//we use 25 here so that events schedueled for 11:55 show up on the calendar
+        	//25 hours is used so that events scheduled for 11:55pm (23:55) show up entirely on the calendar.
 	        var hour = (bodyHeight-20)/25;
     	    var minute = hour/60;
         	var startHour = record.data.Record.get(this.getPlugin().getStartEventField()).getHours();
