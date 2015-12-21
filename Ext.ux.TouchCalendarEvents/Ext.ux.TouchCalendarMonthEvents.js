@@ -105,7 +105,7 @@ Ext.define('Ext.ux.TouchCalendarMonthEvents', {
 			// set sizes and positions
 			eventBar.setLeft(dayCellX + (hasWrapped ? 0 : spacing));
 			eventBar.setTop(eventY - eventBarHeight - (barPosition * eventBarHeight + (barPosition * spacing) + spacing));
-			eventBar.setWidth((dayCellWidth * barLength) - (spacing * (doesWrap ? (doesWrap && hasWrapped ? 0 : 1) : 2)));
+			eventBar.setWidth((dayCellWidth * barLength) - (spacing * (doesWrap ? (doesWrap && hasWrapped ? 0 : 1) : 2)) -3);
 
 			if (record.linked().getCount() > 0) {
 				this.renderEventBars(record.linked());
