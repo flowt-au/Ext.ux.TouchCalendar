@@ -16,7 +16,7 @@
 }
 /* line 23, ../scss/Ext.ux.TouchCalendarEvents.scss */
 .touch-calendar-view div.event-bar.event-bar-selected {
-  background-color: #1a222d;
+  background-color: #004400 !important;
 }
 /* line 28, ../scss/Ext.ux.TouchCalendarEvents.scss */
 .touch-calendar-view div.event-bar.wrap-end {
