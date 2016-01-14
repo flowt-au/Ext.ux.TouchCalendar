@@ -130,6 +130,7 @@ Ext.define('Ext.ux.TouchCalendarDayEvents', {
 			minutesDiff = (startDate.getTime() - roundedStartDate.getTime()) / 1000 / 60,
 			firstTimeSlotEl = this.getCalendar().element.select('table.time-slot-table td', this.getCalendar().element.dom).first(),
 			verticalPosition = 0;
+			console.log(roundedStartDate + ' ' +  this.getCalendar().currentDate)
 		if (roundedStartDate < this.getCalendar().currentDate) {
 			timeSlotCount = 0;
 			minutesDiff = 0;
