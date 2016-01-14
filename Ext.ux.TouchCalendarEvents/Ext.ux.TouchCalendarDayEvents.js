@@ -27,7 +27,6 @@ Ext.define('Ext.ux.TouchCalendarDayEvents', {
 
 		for (; i < l; i++) {
 			rec = store.getAt(i);
-
 			var eventRecord     = rec.data.Record;
 
 			var doesWrap    = this.eventBarDoesWrap(rec),
