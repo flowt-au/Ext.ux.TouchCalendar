@@ -27,15 +27,13 @@ Ext.define('Ext.ux.TouchCalendarDayEvents', {
 
 		for (; i < l; i++) {
 			rec = store.getAt(i);
-			var eventRecord     = rec.data.Record;
+			var eventRecord = rec.data.Record;
 
-			var doesWrap    = this.eventBarDoesWrap(rec),
-				hasWrapped  = this.eventBarHasWrapped(rec),
-				cssClasses  = [
+			var doesWrap = this.eventBarDoesWrap(rec),
+				hasWrapped = this.eventBarHasWrapped(rec),
+				cssClasses = [
 					this.getPlugin().getEventBarCls(),
-					'e-' + rec.get('EventID'),
-					(doesWrap ? ' wrap-end' : ''),
-					(hasWrapped ? ' wrap-start' : ''),
+					'e-' + rec.get('EventID'), (doesWrap ? ' wrap-end' : ''), (hasWrapped ? ' wrap-start' : ''),
 					eventRecord.get(this.getPlugin().getCssClassField())
 				];
 
@@ -91,11 +89,16 @@ Ext.define('Ext.ux.TouchCalendarDayEvents', {
 	getEventBarHeightDuration: function(event) {
 		var startDate = event.data.Record.get(this.getPlugin().getStartEventField()),
 			endDate = event.data.Record.get(this.getPlugin().getEndEventField()),
-			roundedStartDate = this.getRoundedTime(startDate),
-			minutesLength = (endDate.getTime() - startDate.getTime()) / 1000 / 60;
-		if (roundedStartDate < this.getCalendar().currentDate)
+			roundedStartDate = this.getRoundedTime(startDate);
+
+		var currentRoundedDate = this.getCalendar().currentDate
+		currentRoundedDate.setHours(0, 0, 0);
+		if (roundedStartDate < currentRoundedDate) {
 			roundedStartDate = this.getRoundedTime(this.getCalendar().currentDate)
-		var timeSlotEl = this.getCalendar().getDateCell(roundedStartDate),
+			startDate = roundedStartDate;
+		}
+		var minutesLength = (endDate.getTime() - startDate.getTime()) / 1000 / 60,
+			timeSlotEl = this.getCalendar().getDateCell(roundedStartDate),
 			timeSlotRowEl = timeSlotEl.parent('tr', false),
 			heightPixels = 0;
 
@@ -116,8 +119,9 @@ Ext.define('Ext.ux.TouchCalendarDayEvents', {
 			minutesDiff = (startDate.getTime() - roundedStartDate.getTime()) / 1000 / 60,
 			firstTimeSlotEl = this.getCalendar().element.select('table.time-slot-table td', this.getCalendar().element.dom).first(),
 			verticalPosition = 0;
-			console.log(roundedStartDate + ' ' +  this.getCalendar().currentDate)
-		if (roundedStartDate < this.getCalendar().currentDate) {
+		var currentRoundedDate = this.getCalendar().currentDate
+		currentRoundedDate.setHours(0, 0, 0);
+		if (roundedStartDate < currentRoundedDate) {
 			timeSlotCount = 0;
 			minutesDiff = 0;
 		}
@@ -127,10 +131,8 @@ Ext.define('Ext.ux.TouchCalendarDayEvents', {
 				firstTimeSlotY = firstTimeSlotEl.getY(), // first time slot position - needed so we take the header row into account
 				minutesPerPixel = firstTimeSlotHeight / 30,
 				extraMinutesY = minutesDiff * minutesPerPixel;
-
 			verticalPosition = firstTimeSlotY + (timeSlotCount * firstTimeSlotHeight) + extraMinutesY;
 		}
-
 		return verticalPosition;
 	},
 
